@@ -1,7 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<IsTool>true</IsTool>
+		<Title>Melville.HeatForWix</Title>
+		<PackageDescription>Harvest modern .NET apps into a WIX installer.</PackageDescription>
+		<PackageTags>wix msbuild harvest heat .net</PackageTags>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>		
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.3" 
+		                  PricavateAssets="all" ExcludeAssets="Runtime"/>
+	</ItemGroup>
+
+  <ItemGroup>
+	  <Content Include="build\HeatForWix.props" PackagePath="build\"/>
+  </ItemGroup>
+
+    <Target Name="CopyPackage" AfterTargets="Pack">
+		<Copy SourceFiles="$(OutputPath)\..\$(PackageId).$(PackageVersion).nupkg"
+		      DestinationFolder="$(SolutionDir)..\..\TempNuget\" /> 
+	</Target>
 
 </Project>
